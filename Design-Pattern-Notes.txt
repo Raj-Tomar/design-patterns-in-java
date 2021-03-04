@@ -198,7 +198,7 @@ Prototype Design Pattern:
 	
 	Summary:
 		Guarantee unique instance
-		Often refacored in
+		Often refactored in
 		Can help with performances issues
 		Don't always jump to a Factory
 =================================================================================================================
