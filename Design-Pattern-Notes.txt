@@ -176,4 +176,30 @@ Prototype Design Pattern:
 			}
 		}
 		
+	Pitfalls:
+		Sometimes not clear when to use
+		Used with other patterns
+			Registry
+		Shallow VS Deep Copy
+		
+	Contrast to Factory Pattern:
+		
+		Prototype:
+			Lighter weight construction
+				Copy Constructor or Clone
+			Shallow VS Deep Copy
+			Copy of itself
+		
+		Factory:
+			Flexible Objects
+				Multiple constructors
+			Concrete Instance
+			Fresh Instance
+	
+	Summary:
+		Guarantee unique instance
+		Often refacored in
+		Can help with performances issues
+		Don't always jump to a Factory
+=================================================================================================================
 =================================================================================================================
