@@ -202,4 +202,64 @@ Prototype Design Pattern:
 		Can help with performances issues
 		Don't always jump to a Factory
 =================================================================================================================
+
+Factory Method Pattern:
+	
+	Doesn't expose instantiation logic
+	Defer to subclass
+	common interface
+	Specified by Architecture, implemented by user
+	Examples:
+		Calendar
+		ResourceBundle
+		NumberFormat
+		
+	Design:
+		Factory is responsible for lifecycle
+		Common Interface
+		Concrete Classes
+		Parameterized create method
+		
+				Factory
+			+factoryMethod() : Object
+					^
+					|
+			  ConcreteObject
+			+factoryMethod() : Object
+	
+	Everyday Example:
+	
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal);
+		System.out.println(cal.get(Calendar.DAY_OF_MONTH));
+		
+	Pitfalls:
+		Complexity
+		Creation in subclass
+		Refactoring
+	
+	Contrast to Singleton Pattern:
+		Factory
+			Returns varios instances
+				Multiple constructors
+			Interface driven
+			Subclasses
+			Adaptable to environment more easily
+		
+		Singleton
+			Returns same instance
+				One constructor method - no args
+			No Interface
+			No Subclasses
+	
+	Summary:
+		Parameter driven
+		Solves comples creation
+		A little complex
+		Opposite of Singleton
+=================================================================================================================
+
+AbstractFactory Pattern:
+	
+	
 =================================================================================================================
