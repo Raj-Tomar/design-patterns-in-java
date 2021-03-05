@@ -261,5 +261,59 @@ Factory Method Pattern:
 
 AbstractFactory Pattern:
 	
+	Factory of Factories
+	Factory of related objects
+	Common Interface
+	Defer to subclasses
+	Examples:
+		DocumentBuilder
+		Frameworks
+	
+	Design:
+		Groups Factories together
+		Factory is responsible for lifecycle
+		Common Interface
+		Concrete classes
+		Parameterized create method
+		Composition
+	
+	Everyday Example:
+		
+		DocumentBuilderFactory abstractFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder factory = abstractFactory.newDocumentBuilder();
+		Document doc = factory.parse(bais);
+		
+	Pitfalls:
+		Complexity
+		Runtime switch
+		Pattern within a Pattern
+		Problem specific
+		Starts as a Factory
+	
+	Contrast to Factory Pattern:
+		
+		AbstractFactory
+			Implemented with a Factory
+			Hides the Factory
+			Abstract Environment
+			Built through Composition
+		
+		Factory
+			Returns varios instances
+				Multiple constructors
+			Interface driven
+			Subclasses
+			Adaptable to environment more easily
+	
+	Summary:
+		Group of similar Factories
+		Complex
+		Heavy abstraction
+		Framework Pattern
+		
+=================================================================================================================
+What Next?
+	Structural Design Pattern
+	Behavioral Design Pattern 
 	
 =================================================================================================================
