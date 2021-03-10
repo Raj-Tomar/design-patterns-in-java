@@ -1,0 +1,319 @@
+Pattern Groups:
+	1. Creational
+	2. Structural
+	3. Behavioral
+
+Creational Pattern:
+	1. Singleton
+	2. Builder
+	3. Prototype
+	4. Factory
+	5. AbstractFactory
+
+=================================================================================================================
+Singleton Design Pattern:
+
+	Only one instance created
+	Guarantees control of resource
+	Lazy loaded
+	Examples:
+		Runtime
+		Logger (But it can be Factory also, based on implementation)
+		Spring Beans
+		Graphic Managers
+	
+	Design
+		Class is responsible for lifecycle
+		Static in nature
+		Needs to be thread safe
+		Private instance
+		Private constructor
+		No parameters required for construction
+		
+			-singleton : Singleton
+			-singleton()
+			+getInstance() : Singleton
+		
+		Everyday Example:
+			
+			Runtime singletonRuntime = Runtime.getRuntime();
+			singletonRuntime.gc();
+			System.out.println(singletonRuntime);
+			
+			Runtime anotherInstance = Runtime.getRuntime();
+			System.out.println(anotherInstance);
+			if (singletonRuntime == anotherInstance) {
+				System.out.println("They are the same instance");
+			}
+			
+		Pitfalls:
+			Often overused
+			Difficult to unit test
+			If not careful, not thread-safe
+			Sometimes confused for Factory
+			java.util.Calendar is NOT a Singleton
+				it is Prototype
+		
+		Contrast to Factory Pattern:
+			Singleton:
+				Returns same instance
+					One constructor method - no args
+				No Interface
+			Factory:
+				Return various instances
+					Multiple constructors
+				Interface driven
+				Adaptable to environment more easily 
+		
+		Summary:
+			Guarantee one instance
+			Easy to implement
+			Solves a well defined problem
+			Don't abuse it
+			Use it wisely and don't confuse with Factory Pattern
+
+=================================================================================================================
+Builder Design Pattern:
+	
+	Often used, People create their own
+	Handles Complex constructors
+	Large number of parameters
+	Immutability
+	Examples:
+		StringBuilder
+		DocumentBuilder
+		Local.Builder
+		
+	Design:
+		Flexibility over telescoping constructor
+		Static inner class
+		Calls appropriate constructor
+		Negates the need for exposed setters
+		Java 1.5+ can take advantage of Generics
+		
+				Builder
+			  +buildPart()
+			 	 ^
+			 	 |
+			 ConcreteBuilder
+			 +buildPart()
+			 +getResult()
+	
+	Everyday Example:
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("This is an example ");
+		builder.append("of Builder Pattern. ");
+		builder.append("It has a methods to append ");
+		builder.append("almost anything we want to a String. ");
+		builder.append(111);
+		
+	Pitfalls:
+		Immutable
+		Inner static class
+		Designed first
+		Complexity
+		
+	Contrast to Prototype Pattern:
+		
+		Builder:
+			Handles complex constructors
+			No Interface required
+			Can be separate class
+			Works with legacy code
+		
+		Prototype:
+			Implemented around a clone
+			Avoids calling complex constructors
+			Difficult to implement in legacy code
+			
+	Summary:
+		Creative way to deal with complexity
+		Easy to implement
+		Few drawbacks
+		Can re-factor in with separate class	
+=================================================================================================================
+Prototype Design Pattern:
+	
+	Avoids costly creation
+	Avoids sub-classing
+	Typically does't use "new" keyword
+	Often utilizes an Interface
+	Usually implemented with a Registry
+	Example:
+		java.lang.Object#clone()
+	
+	Design:
+		Implements Clone / Cloneable 
+		Avoids keyword "new"
+		Although a copy, each instance is unique
+		Costly construction not handled by client
+		Can still utilize parameters for construction
+		Shallow VS Deep copy
+			
+			<<Interface>>
+			IPrototype
+		-----------------------
+			+ Clone()
+			+ DeepCopy()
+	
+	Everyday Example:
+		
+		public class Statement implements Cloneable {
+			public Statement (String sql, List<String> parameters, Records record) {
+				this.sql = sql;
+				this.parameters = parameters;
+				this.record = record;
+			}
+			
+			public Statement clone() {
+				try {
+					return (Statement) super.clone();
+				} catch (CloneNotSupportedException e) {
+					
+				}
+				return null;
+			}
+		}
+		
+	Pitfalls:
+		Sometimes not clear when to use
+		Used with other patterns
+			Registry
+		Shallow VS Deep Copy
+		
+	Contrast to Factory Pattern:
+		
+		Prototype:
+			Lighter weight construction
+				Copy Constructor or Clone
+			Shallow VS Deep Copy
+			Copy of itself
+		
+		Factory:
+			Flexible Objects
+				Multiple constructors
+			Concrete Instance
+			Fresh Instance
+	
+	Summary:
+		Guarantee unique instance
+		Often refactored in
+		Can help with performances issues
+		Don't always jump to a Factory
+=================================================================================================================
+
+Factory Method Pattern:
+	
+	Doesn't expose instantiation logic
+	Defer to subclass
+	common interface
+	Specified by Architecture, implemented by user
+	Examples:
+		Calendar
+		ResourceBundle
+		NumberFormat
+		
+	Design:
+		Factory is responsible for lifecycle
+		Common Interface
+		Concrete Classes
+		Parameterized create method
+		
+				Factory
+			+factoryMethod() : Object
+					^
+					|
+			  ConcreteObject
+			+factoryMethod() : Object
+	
+	Everyday Example:
+	
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal);
+		System.out.println(cal.get(Calendar.DAY_OF_MONTH));
+		
+	Pitfalls:
+		Complexity
+		Creation in subclass
+		Refactoring
+	
+	Contrast to Singleton Pattern:
+		Factory
+			Returns varios instances
+				Multiple constructors
+			Interface driven
+			Subclasses
+			Adaptable to environment more easily
+		
+		Singleton
+			Returns same instance
+				One constructor method - no args
+			No Interface
+			No Subclasses
+	
+	Summary:
+		Parameter driven
+		Solves comples creation
+		A little complex
+		Opposite of Singleton
+=================================================================================================================
+
+AbstractFactory Pattern:
+	
+	Factory of Factories
+	Factory of related objects
+	Common Interface
+	Defer to subclasses
+	Examples:
+		DocumentBuilder
+		Frameworks
+	
+	Design:
+		Groups Factories together
+		Factory is responsible for lifecycle
+		Common Interface
+		Concrete classes
+		Parameterized create method
+		Composition
+	
+	Everyday Example:
+		
+		DocumentBuilderFactory abstractFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder factory = abstractFactory.newDocumentBuilder();
+		Document doc = factory.parse(bais);
+		
+	Pitfalls:
+		Complexity
+		Runtime switch
+		Pattern within a Pattern
+		Problem specific
+		Starts as a Factory
+	
+	Contrast to Factory Pattern:
+		
+		AbstractFactory
+			Implemented with a Factory
+			Hides the Factory
+			Abstract Environment
+			Built through Composition
+		
+		Factory
+			Returns varios instances
+				Multiple constructors
+			Interface driven
+			Subclasses
+			Adaptable to environment more easily
+	
+	Summary:
+		Group of similar Factories
+		Complex
+		Heavy abstraction
+		Framework Pattern
+		
+=================================================================================================================
+What Next?
+	Structural Design Pattern
+	Behavioral Design Pattern 
+	
+=================================================================================================================
